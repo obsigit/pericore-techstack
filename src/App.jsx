@@ -9,12 +9,12 @@ const CATEGORIES = [
       {
         name: "pplx-embed-context-v1",
         variant: "0.6B / 4B",
-        status: "aktiv",
-        reason: "Kontextbewusste Embeddings loesen das Chunk-Grenzproblem strukturell. SOTA auf BERGEN RAG-Benchmark. Kein Instruction-Prefix noetig.",
+        status: "tentativ",
+        reason: "Kontextbewusste Embeddings loesen das Chunk-Grenzproblem strukturell. SOTA auf BERGEN RAG-Benchmark. Kein Instruction-Prefix noetig. Lineage-Vorbehalt fuer Klient-sichtbare Spur-A-Mandate offen (TEK-Lineage-Memo + Sample-Bench ausstehend).",
         techDesc: "Bidirektionales Embedding-Modell mit Diffusion-basiertem Pretraining auf Qwen3-Basis. Erzeugt chunk-level Repraesentationen unter Einbezug des Dokumentkontexts (Late Chunking). Native INT8-Quantisierung (4x Speicherreduktion), Binary-Variante (32x). 0.6B fuer Low-Latency, 4B fuer maximale Retrieval-Qualitaet. ConTEB SOTA: 81.96% nDCG@10.",
         noviceDesc: "Stell dir vor, du teilst ein Buch in Abschnitte. Normale Modelle vergessen beim Lesen eines Abschnitts, was vorher stand. Dieses Modell merkt sich den Zusammenhang des ganzen Buches, auch wenn es nur einen Absatz einliest.",
         openSource: true, license: "MIT", country: "US", countryFlag: "\u{1F1FA}\u{1F1F8}",
-        gdprNote: "Lokal ausfuehrbar, keine Daten verlassen das System",
+        gdprNote: "Basis-LLM Qwen3 (Alibaba, China). Re-Release durch Perplexity AI unter MIT mit Diffusion-Continued-Pretraining. Klient-Signal-Risiko bei DSGVO-strikten oder hochsicherheits-zertifizierten Mandaten. Spur-A-Einsatz nur nach Mandats-bezogener Compliance-Pruefung.",
         provider: "Perplexity AI", released: "2026-02-27",
         links: { huggingface: "https://huggingface.co/pplx", docs: "https://docs.perplexity.ai/docs/embeddings/quickstart" }
       },
@@ -22,12 +22,73 @@ const CATEGORIES = [
         name: "pplx-embed-v1",
         variant: "0.6B / 4B",
         status: "tentativ",
-        reason: "Standard-Variante ohne Kontextbewusstsein. Relevant fuer Standalone-Queries und Query-Embedding.",
+        reason: "Standard-Variante ohne Kontextbewusstsein. Relevant fuer Standalone-Queries und Query-Embedding. Lineage-Vorbehalt fuer Klient-sichtbare Spur-A-Mandate offen (TEK-Lineage-Memo + Sample-Bench ausstehend).",
         techDesc: "Dense Retrieval Embedding-Modell fuer unabhaengige Texte und Suchanfragen. Gleiche Architektur wie context-v1, aber ohne Late Chunking. MTEB Multilingual v2: 69.66% nDCG@10 (4B). Matryoshka Representation Learning fuer flexible Dimensionen.",
         noviceDesc: "Die einfachere Version des Perplexity-Modells. Gut fuer einzelne Suchanfragen, aber ohne das Gedaechtnis fuer den Buchkontext.",
         openSource: true, license: "MIT", country: "US", countryFlag: "\u{1F1FA}\u{1F1F8}",
-        gdprNote: "Lokal ausfuehrbar", provider: "Perplexity AI", released: "2026-02-27",
+        gdprNote: "Basis-LLM Qwen3 (Alibaba, China). Re-Release durch Perplexity AI unter MIT mit Diffusion-Continued-Pretraining. Klient-Signal-Risiko bei DSGVO-strikten oder hochsicherheits-zertifizierten Mandaten. Spur-A-Einsatz nur nach Mandats-bezogener Compliance-Pruefung.",
+        provider: "Perplexity AI", released: "2026-02-27",
         links: { huggingface: "https://huggingface.co/pplx" }
+      },
+      {
+        name: "Octen-Embedding-0.6B",
+        variant: "0.6B / LoRA-Fine-Tune",
+        status: "aktiv",
+        reason: "Aktives cv-rag-Embedding. LoRA-Fine-Tune von Qwen3-Embedding-0.6B durch HPI/Octen-Linie. Bei cv-rag-Bench am 12.05.2026 mit 3,7 pp Vorsprung gegenueber Qwen3-Embedding-0.6B bei 90/10 EN/DE.",
+        techDesc: "LoRA-Adaption von Qwen3-Embedding-0.6B. Europaeische akademische Adaption mildert Reputations-Risiko der Qwen3-Lineage teilweise. Spur-B-Setup. RTEB-Beta-Benchmark.",
+        noviceDesc: "Eine in Europa angepasste Version des chinesischen Qwen3-Suchmodells. Akademische Schicht (HPI/Octen) auf der Basis von Alibaba.",
+        openSource: true, license: "Apache 2.0", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
+        gdprNote: "Lokal ausfuehrbar. Qwen3-Lineage in Basisgewichten. Fuer cv-rag-Spur-B-Einsatz freigegeben. Fuer Spur-A-Mandate-RAGs nicht vorgesehen.",
+        provider: "Octen / HPI (LoRA), Alibaba (Basis)", released: "2026",
+        links: {}
+      },
+      {
+        name: "Qwen3-Embedding-0.6B",
+        variant: "0.6B / 1024-dim",
+        status: "evaluiert",
+        reason: "Im Direktvergleich mit Octen-Embedding-0.6B am 12.05.2026 fuer cv-rag/eval-methods-rag geprueft. Octen gewichtet vorgezogen (3,7 pp bei 90/10 EN/DE). China-Lineage als Zusatzargument fuer Octen, bei rein operativem Setup kein Showstopper, bei Klient-sichtbaren Mandaten Reputations-Risiko.",
+        techDesc: "Bidirektionales Embedding-Modell von Alibaba, Qwen3-Familie. Apache-2.0, open weights, lokal lauffaehig. 0.6B Variante (~596M Params), 1024-dim. Basis fuer Perplexity- und Octen-Adaptionen.",
+        noviceDesc: "Das chinesische Original-Suchmodell. Frei verfuegbar und lokal lauffaehig, aber Hersteller ist Alibaba — relevant fuer Klient-Sichtbarkeit.",
+        openSource: true, license: "Apache 2.0", country: "CN", countryFlag: "\u{1F1E8}\u{1F1F3}",
+        gdprNote: "Lokal ausfuehrbar, keine Daten an Alibaba bei Inferenz. Reputations- und Trainingsdaten-Bias-Risiko bestehen. Fuer Spur-A-Mandate mit DSGVO-strikten oder hochsicherheits-zertifizierten Klienten nicht empfohlen.",
+        provider: "Alibaba Cloud", released: "2026",
+        links: { huggingface: "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B" }
+      },
+      {
+        name: "mxbai-embed-large-v1",
+        variant: "335M / 1024-dim",
+        status: "tentativ",
+        reason: "Kandidat fuer pipeline-rag Sample-Bench (TEK Memo v1.1). Lineage-saubere Alternative ohne China-Basis, in Berlin entwickelt.",
+        techDesc: "BERT-basiertes Sentence-Embedding-Modell von Mixedbread AI (Berlin). 335M Params, 1024 Dimensionen. Apache-2.0, MTEB-kompetitiv (englisch-fokussiert). Multiple Quantisierungen (ONNX, GGUF, OpenVINO).",
+        noviceDesc: "Ein Berliner Suchmodell ohne chinesische Vorgeschichte. Mittelgross, englisch-fokussiert, gut etabliert.",
+        openSource: true, license: "Apache 2.0", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
+        gdprNote: "Lokal ausfuehrbar. In Berlin entwickelt. Keine Daten an Anbieter bei lokaler Inferenz.",
+        provider: "Mixedbread AI (Berlin)", released: "2024",
+        links: { huggingface: "https://huggingface.co/mixedbread-ai/mxbai-embed-large-v1" }
+      },
+      {
+        name: "jina-embeddings-v3",
+        variant: "572M / Multilingual / Late Chunking",
+        status: "tentativ",
+        reason: "Kandidat fuer pipeline-rag Sample-Bench (TEK Memo v1.1). Natives Late Chunking, multilingual (DE/EN stark). Lizenz pruefen: CC-BY-NC-4.0 (nicht-kommerziell) — kommerzielle Nutzung erfordert Jina-Lizenz.",
+        techDesc: "Multilinguales Embedding-Modell von Jina AI (Berlin). 572M Params, natives Late Chunking, Task-LoRA-Adapter (Retrieval, Classification, Separation, Matching). 100+ Sprachen. Region:eu auf HF.",
+        noviceDesc: "Ein Berliner Suchmodell, das viele Sprachen versteht und Buchkapitel zusammenhaengend einliest. Lizenz ist nur fuer Forschung kostenlos — Beratungseinsatz braucht Jina-Vertrag.",
+        openSource: true, license: "CC-BY-NC-4.0 (non-commercial)", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
+        gdprNote: "EU-Hosting verfuegbar. Lokal ausfuehrbar. Lizenz: kommerzielle Nutzung (Klienten-Mandate) erfordert separate Jina-Lizenz, nicht direkt produktiv einsetzbar.",
+        provider: "Jina AI (Berlin)", released: "2024",
+        links: { huggingface: "https://huggingface.co/jinaai/jina-embeddings-v3" }
+      },
+      {
+        name: "EuroBERT",
+        variant: "210M / 610M / 2.1B",
+        status: "tentativ",
+        reason: "Kandidat fuer pipeline-rag Sample-Bench (TEK Memo v1.1) — Pruefen ob direkt als Embedding nutzbar. Base-Architektur ist Fill-Mask (BERT-Stil), Embedding via Pooling-Layer oder separater Fine-Tune noetig. EU-Forschungsprojekt.",
+        techDesc: "Multilinguales BERT-Modell aus EU-Forschungsprojekt. 15 Sprachen inkl. DE/EN/FR. Drei Groessen: 210M, 610M, 2.1B Params. HF-Task ist fill-mask, nicht direkt feature-extraction — Embedding-Nutzung erfordert Pooling-Adapter oder Fine-Tune auf Retrieval-Objektiv.",
+        noviceDesc: "Ein europaeisches Sprachmodell mit viel deutscher Trainingsbasis. Muss erst fuer Suche angepasst werden, bevor es direkt als Embedding-Modell nutzbar ist.",
+        openSource: true, license: "Apache 2.0", country: "EU", countryFlag: "\u{1F1EA}\u{1F1FA}",
+        gdprNote: "EU-Forschungsprojekt. Lokal ausfuehrbar. Lineage-sauber. Embedding-Eignung muss durch Sample-Bench bestaetigt werden.",
+        provider: "EuroBERT-Konsortium (EU)", released: "2025",
+        links: { huggingface: "https://huggingface.co/EuroBERT/EuroBERT-610m" }
       },
       {
         name: "intfloat/multilingual-e5-large",
@@ -52,14 +113,15 @@ const CATEGORIES = [
         links: { huggingface: "https://huggingface.co/BAAI/bge-small-en-v1.5" }
       },
       {
-        name: "nomic-embed-text",
-        variant: "137M / 768-dim",
+        name: "nomic-embed-text-v1.5",
+        variant: "137M / 768-dim / 8192 ctx",
         status: "evaluiert",
-        reason: "Zweiter Kandidat fuer LoRA Fine-Tuning Assessment. Staerkere Baseline als bge-small, aber groesser.",
-        techDesc: "Open-Source Embedding-Modell von Nomic AI. 137M Parameter, 768 Dimensionen, 8192 Token Kontextlaenge. Trainiert auf kuratierten Daten mit reproduzierbarer Pipeline.",
-        noviceDesc: "Ein mittelgrosses Suchmodell mit besonders langem Gedaechtnis. Guter Kompromiss zwischen Geschwindigkeit und Qualitaet.",
+        reason: "Zweiter Kandidat fuer LoRA Fine-Tuning Assessment (vs bge-small). Zusaetzlich Kandidat fuer pipeline-rag Sample-Bench (TEK Memo v1.1) als Lineage-saubere US-Alternative ohne China-Basis.",
+        techDesc: "Open-Source Embedding-Modell von Nomic AI (USA). 137M Parameter, 768 Dimensionen, 8192 Token Kontextlaenge. Trainiert auf kuratierten Daten mit reproduzierbarer Pipeline. Apache 2.0. Matryoshka-Representation.",
+        noviceDesc: "Ein mittelgrosses US-Suchmodell mit besonders langem Gedaechtnis. Guter Kompromiss zwischen Geschwindigkeit und Qualitaet. Reproduzierbar trainiert.",
         openSource: true, license: "Apache 2.0", country: "US", countryFlag: "\u{1F1FA}\u{1F1F8}",
-        gdprNote: "Lokal ausfuehrbar", provider: "Nomic AI", released: "2024",
+        gdprNote: "Lokal ausfuehrbar. US-Anbieter, aber bei lokaler Inferenz keine Datenuebertragung.",
+        provider: "Nomic AI", released: "2024",
         links: { huggingface: "https://huggingface.co/nomic-ai/nomic-embed-text-v1.5" }
       }
     ]
