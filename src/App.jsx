@@ -9,8 +9,8 @@ const CATEGORIES = [
       {
         name: "pplx-embed-context-v1",
         variant: "0.6B / 4B",
-        status: "tentativ",
-        reason: "Kontextbewusste Embeddings loesen das Chunk-Grenzproblem strukturell. SOTA auf BERGEN RAG-Benchmark. Kein Instruction-Prefix noetig. Lineage-Vorbehalt fuer Klient-sichtbare Spur-A-Mandate offen (TEK-Lineage-Memo + Sample-Bench ausstehend).",
+        status: "evaluiert",
+        reason: "Evaluiert 2026-05-15 im Rahmen RAG-Foederations-Memo v1.0, nicht weiterverfolgt. Pericore-Standard ist die 17.04.2026-Octen-Linie (cv-rag 0.6B, pipeline-rag 4B). pplx-embed teilt die Qwen3-Lineage ohne HPI-Vergleichsanker, der Octen im deutschen Forschungskontext legitimiert. Kontextbewusste Embeddings loesen das Chunk-Grenzproblem strukturell, SOTA auf BERGEN RAG-Benchmark — bleiben als Referenzkandidat dokumentiert.",
         techDesc: "Bidirektionales Embedding-Modell mit Diffusion-basiertem Pretraining auf Qwen3-Basis. Erzeugt chunk-level Repraesentationen unter Einbezug des Dokumentkontexts (Late Chunking). Native INT8-Quantisierung (4x Speicherreduktion), Binary-Variante (32x). 0.6B fuer Low-Latency, 4B fuer maximale Retrieval-Qualitaet. ConTEB SOTA: 81.96% nDCG@10.",
         noviceDesc: "Stell dir vor, du teilst ein Buch in Abschnitte. Normale Modelle vergessen beim Lesen eines Abschnitts, was vorher stand. Dieses Modell merkt sich den Zusammenhang des ganzen Buches, auch wenn es nur einen Absatz einliest.",
         openSource: true, license: "MIT", country: "US", countryFlag: "\u{1F1FA}\u{1F1F8}",
@@ -21,8 +21,8 @@ const CATEGORIES = [
       {
         name: "pplx-embed-v1",
         variant: "0.6B / 4B",
-        status: "tentativ",
-        reason: "Standard-Variante ohne Kontextbewusstsein. Relevant fuer Standalone-Queries und Query-Embedding. Lineage-Vorbehalt fuer Klient-sichtbare Spur-A-Mandate offen (TEK-Lineage-Memo + Sample-Bench ausstehend).",
+        status: "evaluiert",
+        reason: "Evaluiert 2026-05-15 im Rahmen RAG-Foederations-Memo v1.0, nicht weiterverfolgt. Pericore-Standard ist die 17.04.2026-Octen-Linie (cv-rag 0.6B, pipeline-rag 4B). pplx-embed teilt die Qwen3-Lineage ohne HPI-Vergleichsanker, der Octen im deutschen Forschungskontext legitimiert. Standard-Variante ohne Kontextbewusstsein, relevant als Referenzkandidat fuer Query-Embedding-Pfade.",
         techDesc: "Dense Retrieval Embedding-Modell fuer unabhaengige Texte und Suchanfragen. Gleiche Architektur wie context-v1, aber ohne Late Chunking. MTEB Multilingual v2: 69.66% nDCG@10 (4B). Matryoshka Representation Learning fuer flexible Dimensionen.",
         noviceDesc: "Die einfachere Version des Perplexity-Modells. Gut fuer einzelne Suchanfragen, aber ohne das Gedaechtnis fuer den Buchkontext.",
         openSource: true, license: "MIT", country: "US", countryFlag: "\u{1F1FA}\u{1F1F8}",
@@ -34,13 +34,14 @@ const CATEGORIES = [
         name: "Octen-Embedding-0.6B",
         variant: "0.6B / LoRA-Fine-Tune",
         status: "aktiv",
-        reason: "Aktives cv-rag-Embedding. LoRA-Fine-Tune von Qwen3-Embedding-0.6B durch HPI/Octen-Linie. Bei cv-rag-Bench am 12.05.2026 mit 3,7 pp Vorsprung gegenueber Qwen3-Embedding-0.6B bei 90/10 EN/DE.",
-        techDesc: "LoRA-Adaption von Qwen3-Embedding-0.6B. Europaeische akademische Adaption mildert Reputations-Risiko der Qwen3-Lineage teilweise. Spur-B-Setup. RTEB-Beta-Benchmark.",
-        noviceDesc: "Eine in Europa angepasste Version des chinesischen Qwen3-Suchmodells. Akademische Schicht (HPI/Octen) auf der Basis von Alibaba.",
+        reason: "Aktives cv-rag-Embedding. Octen (octen.ai), basierend auf Qwen3-Embedding (Alibaba) via LoRA-Fine-Tune. HPI nutzt Octen-Embedding-8B im BMBF-Pilot — institutioneller Vergleichsanker im deutschen Forschungskontext, kein Entwickler-Bezug. Bei cv-rag-Bench am 12.05.2026 mit 3,7 pp Vorsprung gegenueber Qwen3-Embedding-0.6B bei 90/10 EN/DE.",
+        techDesc: "LoRA-Adaption von Qwen3-Embedding-0.6B durch Octen (octen.ai). 595.8M Params, 1024-dim, max_seq=32768, sentence-transformers. Apache 2.0. Spur-B-Setup. RTEB-Beta-Benchmark.",
+        noviceDesc: "Eine durch Octen feinjustierte Variante des chinesischen Qwen3-Suchmodells (Alibaba-Basis). HPI nutzt die groessere 8B-Variante im BMBF-Pilot als Forschungs-Referenzanker, ist aber nicht Entwickler des Modells.",
         openSource: true, license: "Apache 2.0", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
         gdprNote: "Lokal ausfuehrbar. Qwen3-Lineage in Basisgewichten. Fuer cv-rag-Spur-B-Einsatz freigegeben. Fuer Spur-A-Mandate-RAGs nicht vorgesehen.",
-        provider: "Octen / HPI (LoRA), Alibaba (Basis)", released: "2026",
-        links: {}
+        provider: "Octen (octen.ai), Alibaba (Basis)", released: "2026",
+        snapshotHash: "d715b32ee68f057b54dff09fc93c23485bc403d3 (HF main @ 2026-02-09)",
+        links: { huggingface: "https://huggingface.co/Octen/Octen-Embedding-0.6B", provider: "https://octen.ai" }
       },
       {
         name: "Qwen3-Embedding-0.6B",
@@ -69,8 +70,8 @@ const CATEGORIES = [
       {
         name: "jina-embeddings-v3",
         variant: "572M / Multilingual / Late Chunking",
-        status: "tentativ",
-        reason: "Kandidat fuer pipeline-rag Sample-Bench (TEK Memo v1.1). Natives Late Chunking, multilingual (DE/EN stark). Lizenz pruefen: CC-BY-NC-4.0 (nicht-kommerziell) — kommerzielle Nutzung erfordert Jina-Lizenz.",
+        status: "ausgeschlossen",
+        reason: "CC-BY-NC-4.0-Lizenz. Fuer Pericore-Beratungseinsatz (kommerzielle Taetigkeit) formal nicht zulaessig. Kommerzielle Lizenz via Jina AI verfuegbar, Aufnahme nur unter expliziter CFO-Pre-Approval.",
         techDesc: "Multilinguales Embedding-Modell von Jina AI (Berlin). 572M Params, natives Late Chunking, Task-LoRA-Adapter (Retrieval, Classification, Separation, Matching). 100+ Sprachen. Region:eu auf HF.",
         noviceDesc: "Ein Berliner Suchmodell, das viele Sprachen versteht und Buchkapitel zusammenhaengend einliest. Lizenz ist nur fuer Forschung kostenlos — Beratungseinsatz braucht Jina-Vertrag.",
         openSource: true, license: "CC-BY-NC-4.0 (non-commercial)", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
