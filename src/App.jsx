@@ -31,10 +31,25 @@ const CATEGORIES = [
         links: { huggingface: "https://huggingface.co/pplx" }
       },
       {
+        name: "Octen-Embedding-8B",
+        variant: "8B / 4096-dim / BF16+INT8",
+        status: "aktiv",
+        reason: "Pericore-Embedding-Standard ab 2026-05-15 fuer alle Module der RAG-Foederation (cv-rag, eval-methods-rag, pipeline-rag, Mandate-RAGs). RTEB Leaderboard #1 (Mean Task 0.8045). HPI nutzt das Modell im BMBF-Pilot — institutioneller Vergleichsanker im deutschen Forschungskontext, kein Entwickler-Bezug. Apache-2.0, lokal lauffaehig auf MacBook M5 (26 GB unified Memory) mit INT8-Variante.",
+        techDesc: "LoRA-Fine-Tune von Qwen/Qwen3-Embedding-8B durch Octen. 4096-dim. Native BF16 (ca. 16 GB) und INT8-Variante (ca. 8 GB) verfuegbar. Vektorraum-konsistent ueber alle Pericore-Module. RTEB Mean Task 0.8045 (#1).",
+        noviceDesc: "Das aktuell beste Suchmodell auf RTEB-Benchmark. Wird in Pericore durchgaengig fuer alle RAG-Module genutzt, damit Such-Ergebnisse aus verschiedenen Wissensspeichern direkt vergleichbar sind.",
+        openSource: true, license: "Apache 2.0", country: "INT", countryFlag: "\u{1F310}",
+        gdprNote: "Lokal ausfuehrbar, keine Daten-Verbindung zu Octen oder Alibaba bei Inferenz. Qwen3-Lineage in Basisgewichten. Spur-B-Einsatz freigegeben (cv-rag, eval-methods-rag, pipeline-rag). Spur-A-Einsatz (Mandate-RAGs) erfordert JUR/SEC-Mini-Pruefung pro Mandat (COS-Auflage v1.1).",
+        provider: "Octen (octen.ai), basierend auf Qwen/Qwen3-Embedding-8B (Alibaba) via LoRA", released: "2026",
+        snapshotHash: "TBD bis Pinning durchgefuehrt (Modell-Pinning eigener AP nach 2026-05-25-Konsolidierung)",
+        pricingNote: "CFO-Envelope 300 EUR/Jahr Spur B fuer Operationalisierung (Erst-Indexierung GEX44-INT8 ca. 200 EUR einmalig, jaehrliches Re-Embedding 100-200 EUR). Spur A bilanziell 40-110 EUR/Jahr, kein Cash. Hetzner-Inference-Fallback deaktiviert, Trigger-Spec dokumentiert.",
+        providerOrigin: "Octen, Team-Origin aus oeffentlichen Quellen nicht eindeutig, Octen.ai als Provider",
+        links: { huggingface: "https://huggingface.co/Octen/Octen-Embedding-8B", huggingface_int8: "https://huggingface.co/Octen/Octen-Embedding-8B-INT8", blog: "https://octen-team.github.io/octen_blog/", website: "https://octen.ai" }
+      },
+      {
         name: "Octen-Embedding-0.6B",
         variant: "0.6B / LoRA-Fine-Tune",
-        status: "aktiv",
-        reason: "Aktives cv-rag-Embedding. Octen (octen.ai), basierend auf Qwen3-Embedding (Alibaba) via LoRA-Fine-Tune. HPI nutzt Octen-Embedding-8B im BMBF-Pilot — institutioneller Vergleichsanker im deutschen Forschungskontext, kein Entwickler-Bezug. Bei cv-rag-Bench am 12.05.2026 mit 3,7 pp Vorsprung gegenueber Qwen3-Embedding-0.6B bei 90/10 EN/DE.",
+        status: "uebergang",
+        reason: "Uebergangsstand bis Foederations-Migration. Aktiv in cv-rag und eval-methods-rag bis zur Voll-8B-Migration nach 2026-05-25-Konsolidierung. Re-Embedding beider Module wird Teil des Modell-Pinning-und-Migrations-AP-Strangs. Octen (octen.ai), basierend auf Qwen3-Embedding (Alibaba) via LoRA-Fine-Tune. HPI nutzt Octen-Embedding-8B im BMBF-Pilot — institutioneller Vergleichsanker im deutschen Forschungskontext, kein Entwickler-Bezug. Bei cv-rag-Bench am 12.05.2026 mit 3,7 pp Vorsprung gegenueber Qwen3-Embedding-0.6B bei 90/10 EN/DE.",
         techDesc: "LoRA-Adaption von Qwen3-Embedding-0.6B durch Octen (octen.ai). 595.8M Params, 1024-dim, max_seq=32768, sentence-transformers. Apache 2.0. Spur-B-Setup. RTEB-Beta-Benchmark.",
         noviceDesc: "Eine durch Octen feinjustierte Variante des chinesischen Qwen3-Suchmodells (Alibaba-Basis). HPI nutzt die groessere 8B-Variante im BMBF-Pilot als Forschungs-Referenzanker, ist aber nicht Entwickler des Modells.",
         openSource: true, license: "Apache 2.0", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
@@ -482,7 +497,7 @@ const CATEGORIES = [
         variant: "Dedicated / Cloud",
         status: "aktiv",
         reason: "Remote-Infrastruktur fuer rechenintensive Batch-Jobs, Qdrant-Hosting und n8n-Deployment. Deutsches Rechenzentrum.",
-        techDesc: "Hetzner Dedicated/Cloud Server. Standort Nuernberg/Falkenstein. DSGVO-konform. SSH-Zugang via VS Code Remote. Docker-basiertes Deployment. Aktuell fuer SeaTable und n8n genutzt.",
+        techDesc: "Hetzner Dedicated/Cloud Server. Standort Nuernberg/Falkenstein. DSGVO-konform. SSH-Zugang via VS Code Remote. Docker-basiertes Deployment. Aktuell fuer SeaTable und n8n genutzt. Embedding-Inference-Fallback (GEX44-INT8 default, GEX131 reserve) als Trigger-Spec dokumentiert, aktuell deaktiviert — lokale MacBook-M5-INT8-Variante reicht.",
         noviceDesc: "Ein gemieteter Computer in einem deutschen Rechenzentrum. Uebernimmt schwere Rechenarbeit und laeuft 24/7.",
         openSource: false, license: "Hosting", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
         gdprNote: "Rechenzentrum Deutschland. DSGVO-konform. Spur-B.",
@@ -507,6 +522,7 @@ const CATEGORIES = [
 
 const STATUS_CONFIG = {
   aktiv: { label: "AKTIV", color: "#22c55e", bg: "#052e16" },
+  uebergang: { label: "UEBERGANG", color: "#0ea5e9", bg: "#0a2436" },
   tentativ: { label: "TENTATIV", color: "#f59e0b", bg: "#2a1f00" },
   evaluiert: { label: "EVALUIERT", color: "#8b5cf6", bg: "#1e0a3e" },
   abgeloest: { label: "ABGELOEST", color: "#6b7280", bg: "#1a1a2e" },
@@ -706,7 +722,7 @@ export default function TechStack() {
           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, fontWeight: 700, letterSpacing: "0.05em", color: "#e2e8f0" }}>
             PERICORE TECHSTACK
           </span>
-          <span style={{ fontFamily: "monospace", fontSize: 9, color: "#475569" }}>v2.0 / 2026-04-07 / TEK</span>
+          <span style={{ fontFamily: "monospace", fontSize: 9, color: "#475569" }}>v2.1 / 2026-05-15 / TEK</span>
         </div>
         <div style={{ fontSize: 10, color: "#64748b", marginBottom: 10 }}>
           {allItems.length} Tools in {CATEGORIES.length} Kategorien. RAG, Embedding, LLM, Dev Tools, Knowledge, Automation, Infra.
