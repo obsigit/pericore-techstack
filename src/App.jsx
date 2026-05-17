@@ -286,6 +286,24 @@ const CATEGORIES = [
         gdprNote: "Cloud-basiert. Keine Spur-A-Daten.",
         provider: "Perplexity AI", released: "2024",
         links: { website: "https://perplexity.ai" }
+      },
+      {
+        name: "LiteLLM",
+        variant: "OpenAI-kompatibler Modell-Proxy fuer Anthropic/OpenAI/lokale Modelle",
+        status: "tentativ",
+        reason: "Modell-Proxy mit Primary/Fallback-Switching, OpenAI-API-kompatibel. " +
+                "Im HPI-Repo aihpi/workshop-agentic-rag Stack-Komponente (siehe audit/2026-05-16_hpi-repo-review.md, Commit dec66ef). " +
+                "Pruefen fuer pipeline-rag-Bootstrap nach 2026-05-25.",
+        techDesc: "Python-Proxy, der OpenAI-API-Schnittstelle vor Anthropic, OpenAI, lokale Modelle (Octen via OpenAI-kompatibler Inferenz-Server) und andere stellt. " +
+                  "Erlaubt Primary/Fallback-Routing ohne Code-Aenderung. " +
+                  "Kosten-Tracking pro Modell und Anfrage.",
+        noviceDesc: "Ein Zwischenstueck zwischen deinem Code und KI-Modellen. Du sprichst eine Sprache (OpenAI), und LiteLLM uebersetzt automatisch zu Anthropic, lokalen Modellen oder OpenAI selbst.",
+        openSource: true, license: "MIT", country: "INT", countryFlag: "\u{1F310}",
+        provider: "BerriAI", released: "2023",
+        links: { github: "https://github.com/BerriAI/litellm" },
+        related_audit_files: [
+          "eval-methods-rag/audit/2026-05-16_hpi-repo-review.md"
+        ]
       }
     ]
   },
@@ -363,6 +381,47 @@ const CATEGORIES = [
         openSource: true, license: "BSD", country: "US", countryFlag: "\u{1F1FA}\u{1F1F8}",
         gdprNote: "Lokal ausfuehrbar", provider: "Project Jupyter", released: "2014",
         links: { website: "https://jupyter.org" }
+      },
+      {
+        name: "Docling",
+        variant: "IBM Research, Python-nativer struktur-aware PDF-Parser",
+        status: "tentativ",
+        reason: "Direkter Hebel fuer Phase-C-Lit-Listen-Problem (siehe eval-methods-rag audit/2026-05-16_phase-c-engpass-memo.md, Commit 6b85f8d). " +
+                "Trennt Headers, Paragraphs, Tables und References-Sections nativ. " +
+                "HPI-AISC nutzt es produktiv (aihpi/workshop-agentic-rag, siehe audit/2026-05-16_hpi-repo-review.md, Commit dec66ef). " +
+                "Status tentativ, Empfehlung als aktive Komponente nach 2026-05-25.",
+        techDesc: "IBM Research, MIT-Lizenz, Python-nativ. Extrahiert Document-Structure: Headers, Paragraphs, Tables, References-Sections, OCR. " +
+                  "Integrationspfad: ersetzt aktuelle PDF-Ingestion-Pipeline im eval-methods-rag-Korpus. " +
+                  "Re-Ingestion-Lauf einmalig, rund mehrere Tage bei 98082 Chunks. " +
+                  "Latenz-Trade-off: CPU-Docling rund 30 Sekunden pro 2 MB PDF (HPI-Befund FUTURE_WORK.md P0); fuer Batch-Re-Ingestion akzeptabel, fuer Live-Uploads ungeeignet.",
+        noviceDesc: "Ein PDF-Parser, der nicht nur den Text liest, sondern auch versteht, wo Ueberschriften, Tabellen oder Literaturverzeichnisse sind. Damit lassen sich z.B. Bibliographien beim Suchen ausschliessen.",
+        openSource: true, license: "MIT", country: "INT", countryFlag: "\u{1F310}",
+        provider: "IBM Research", released: "2024",
+        links: { github: "https://github.com/DS4SD/docling" },
+        related_audit_files: [
+          "eval-methods-rag/audit/2026-05-16_phase-c-engpass-memo.md",
+          "eval-methods-rag/audit/2026-05-16_hpi-repo-review.md"
+        ]
+      },
+      {
+        name: "Chainlit",
+        variant: "Python-natives Chat-Frontend mit Citations-Panel",
+        status: "tentativ",
+        reason: "Chat-UI mit Per-User-KB-Uploads und Citations-Panel. " +
+                "Im HPI-Repo aihpi/workshop-agentic-rag Stack-Komponente (siehe audit/2026-05-16_hpi-repo-review.md, Commit dec66ef). " +
+                "Streamlit-Alternative mit besserer Citation-UI. " +
+                "Pruefen fuer WIS-Anker-Kuration-Frontend und R/Q/T-Scoring-Workflow nach 2026-05-25.",
+        techDesc: "Python-Framework fuer Chat-UIs ueber LLM-Backends. " +
+                  "Per-User-Knowledge-Base-Uploads ueber Settings-Modal. " +
+                  "Citations-Panel mit direkten PDF-Sidebar-Viewer-Links. " +
+                  "PostgreSQL-Backed Chat-Thread-Persistenz.",
+        noviceDesc: "Ein vorgefertigtes Chat-Interface, das du auf deine eigene KI-App setzen kannst. Nutzer koennen Dokumente hochladen, und Antworten zeigen direkt, woher die Information kam.",
+        openSource: true, license: "Apache-2.0", country: "INT", countryFlag: "\u{1F310}",
+        provider: "Chainlit Inc.", released: "2023",
+        links: { github: "https://github.com/Chainlit/chainlit" },
+        related_audit_files: [
+          "eval-methods-rag/audit/2026-05-16_hpi-repo-review.md"
+        ]
       }
     ]
   },
