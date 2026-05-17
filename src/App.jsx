@@ -231,6 +231,25 @@ const CATEGORIES = [
         noviceDesc: "Ein Ordnungssystem: Wichtigstes in A, Nachschlagewerke in B, Archiv in C. Man kann gezielt nur in den wichtigsten Dokumenten suchen.",
         openSource: true, license: "Eigenentwicklung", country: "DE", countryFlag: "\u{1F1E9}\u{1F1EA}",
         gdprNote: "Eigenentwicklung", provider: "PERICORE / WIS + TEK", released: "2026", links: {}
+      },
+      {
+        name: "Knowledge-Graph",
+        variant: "GraphRAG / LightRAG / Property Graph (Variante offen)",
+        status: "tentativ",
+        reason: "Im HPI-Repo-Review (aihpi/workshop-agentic-rag) als Diskussions-Thema von HPI-AISC-Kollegen vermerkt, im Repo selbst aber NICHT implementiert (Stack ist Qdrant + Chainlit + LiteLLM + PostgreSQL + Docling, dense-vector-only). HPI-Kollegen-Signal kam aus anderem Kontext; Klaerungs-Bedarf bei naechstem Kontakt: welche Graph-Variante, welcher Use-Case, welche Empfehlungs-Grundlage. Siehe eval-methods-rag/audit/2026-05-16_hpi-repo-review.md (Commit dec66ef). Status tentativ, keine Variante-Festlegung, keine Window-Spalte vor Klaerung.",
+        techDesc: "Strukturierte Repraesentation von Entitaeten und Relationen als Komplement oder Alternative zu dense-vector RAG. Drei in Diskussion stehende Varianten: GraphRAG (Microsoft Research, Community-Summarization plus Graph-Traversal), LightRAG (Hong Kong University, Dual-Level-Retrieval), Property Graph (Neo4j-Stil, semantische Triples). Variante-Wahl haengt von Use-Case (multi-hop-Fragen, Entity-Disambiguation, Lineage) und Schema-Aufwand ab.",
+        noviceDesc: "Anstatt nur Textstuecke nach Aehnlichkeit zu finden, baut ein Knowledge-Graph eine Karte von Begriffen und ihren Beziehungen auf. Damit lassen sich Fragen beantworten, die mehrere gedankliche Schritte oder Verbindungen erfordern.",
+        openSource: true,
+        license: "varianten-abhaengig",
+        country: "INT/multi",
+        provider: "varianten-abhaengig (Microsoft Research, HKUDS, Neo4j, weitere)",
+        released: "2024 (GraphRAG, LightRAG)",
+        links: {
+          github: "https://github.com/microsoft/graphrag"
+        },
+        related_audit_files: [
+          "eval-methods-rag/audit/2026-05-16_hpi-repo-review.md"
+        ]
       }
     ]
   },
