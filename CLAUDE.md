@@ -1,5 +1,11 @@
 # PERICORE TechStack
 
+> **Pflicht-Read vor Session-Start:**
+> ~/Projects/pericore-agents/shared/conventions/OPERATIONAL-CONVENTIONS.md
+>
+> Enthaelt die destillierte stabile Schicht der Pericore-Workspace-
+> Conventions. Verbindlich, ueberschreibt repo-spezifische Defaults.
+
 Interactive technology stack registry for the PERICORE multi-agent system.
 
 ## Architecture
